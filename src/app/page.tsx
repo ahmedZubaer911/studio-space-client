@@ -1,5 +1,7 @@
 import HeroSection from "@/components/home/HeroSection";
 import { Suspense } from "react";
+import FeaturedStudios from "@/components/home/FeaturedStudios";
+import CategoryBrowser from "@/components/home/CategoryBrowser";
 
 export default function Home() {
   return (
@@ -18,6 +20,8 @@ export default function Home() {
       >
         <HeroSection />
       </Suspense>
+      <FeaturedStudios/>
+      <CategoryBrowser />
     </main>
   );
 }
