@@ -62,7 +62,12 @@ export default function HeroSection() {
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
           }}
-          loop
+          loop={true}
+          speed={500}
+          allowTouchMove={true}
+          simulateTouch={true}
+          threshold={5}
+          touchStartPreventDefault={false}
           autoplay={{
             delay: 6000,
             disableOnInteraction: false,
@@ -142,7 +147,7 @@ export default function HeroSection() {
           type="button"
           onClick={() => swiperRef.current?.slidePrev()}
           aria-label="Previous slide"
-          className="absolute left-4 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full  bg-black/30 text-white backdrop-blur-md transition  hover:bg-blue-600 sm:left-8 sm:h-12 sm:w-12"
+          className="absolute left-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full  bg-black/30 text-white backdrop-blur-md transition  hover:bg-blue-950 sm:left-8 sm:flex sm:h-12 sm:w-12 "
         >
           <ChevronLeft size={24} />
         </button>
@@ -152,7 +157,7 @@ export default function HeroSection() {
           type="button"
           onClick={() => swiperRef.current?.slideNext()}
           aria-label="Next slide"
-          className="absolute right-4 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition hover:bg-blue-600 sm:right-8 sm:h-12 sm:w-12"
+          className="absolute right-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition hover:bg-blue-950 sm:right-8 sm:flex sm:h-12 sm:w-12"
         >
           <ChevronRight size={24} />
         </button>
