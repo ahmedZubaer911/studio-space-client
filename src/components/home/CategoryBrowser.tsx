@@ -120,7 +120,7 @@ export default function CategoryBrowser() {
     });
 
   return (
-    <section className="bg-gray-50 px-5 py-20 dark:bg-[#160d24] sm:px-8 lg:px-16">
+    <section className="bg-gray-50 px-5 py-20 dark:bg-[#10091d] sm:px-8 lg:px-16">
       <div className="mx-auto max-w-7xl">
         {/* Section Heading */}
         <div className="mb-12 text-center">
