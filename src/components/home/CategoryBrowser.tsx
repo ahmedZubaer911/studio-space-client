@@ -130,7 +130,7 @@ export default function CategoryBrowser() {
 
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
             Explore by{" "}
-            <span className="text-blue-600 dark:text-blue-500">Category</span>
+            <span className="text-blue-600 dark:text-blue-600">Category</span>
           </h2>
 
           <p className="mx-auto mt-4 max-w-2xl text-gray-600 dark:text-gray-400">
@@ -181,7 +181,7 @@ export default function CategoryBrowser() {
               <div className="mt-10 flex justify-center">
                 <Link
                   href="/studios"
-                  className="group inline-flex items-center gap-3 rounded-xl border-2 border-violet-600 px-8 py-3.5 font-semibold text-blue-700 transition-all duration-300 hover:bg-blue-600 hover:text-white dark:text-violet-300 dark:hover:text-white"
+                  className="group inline-flex items-center gap-3 rounded-xl border-2 border-blue-600 px-8 py-3.5 font-semibold text-blue-700 transition-all duration-300 hover:bg-blue-600 hover:text-white dark:text-blue-300 dark:hover:text-white"
                 >
                   Explore All Categories
                   <ArrowUpRight

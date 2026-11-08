@@ -59,7 +59,7 @@ export default function FeaturedStudios() {
 
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
             Explore Our{" "}
-            <span className="text-blue-600 dark:text-violet-400">
+            <span className="text-blue-600 dark:text-blue-600">
               Featured Studios
             </span>
           </h2>

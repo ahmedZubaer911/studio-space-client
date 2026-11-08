@@ -108,7 +108,7 @@ export default function HeroSection() {
                     <h1 className="text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
                       {slide.titleBefore}
 
-                      <span className="bg-linear-to-r from-violet-600 via-purple-600 to-fuchsia-400 bg-clip-text text-transparent">
+                      <span className="text-blue-600 bg-clip-text">
                         {slide.highlight}
                       </span>
 

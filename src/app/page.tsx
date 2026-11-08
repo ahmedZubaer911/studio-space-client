@@ -4,6 +4,7 @@ import FeaturedStudios from "@/components/home/FeaturedStudios";
 import CategoryBrowser from "@/components/home/CategoryBrowser";
 import HowBookingWorks from "@/components/home/HowBookingWorks";
 import HostGuarantee from "@/components/home/HostGurantee";
+import BecomeHost from "@/components/home/BecomeHost";
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
       <HowBookingWorks />
       <FeaturedStudios />
       <HostGuarantee />
+      <BecomeHost />
     </main>
   );
 }
