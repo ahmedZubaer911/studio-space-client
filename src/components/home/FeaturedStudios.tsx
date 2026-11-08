@@ -10,6 +10,7 @@ interface Studio {
   title: string;
   category: string;
   hourlyRate: number;
+  securityDeposit: number;
   location: string;
   imageUrl: string;
   maxCapacity: number;
@@ -113,13 +114,19 @@ export default function FeaturedStudios() {
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
 
-                  <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-violet-700 shadow-sm">
+                  <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-blue-700 shadow-sm">
                     {studio.category}
                   </span>
 
-                  <div className="absolute bottom-4 right-4 rounded-lg bg-gray-950/80 px-3 py-2 text-sm font-semibold text-white">
+                  <div className="absolute bottom-4 left-4 rounded-lg bg-gray-950/80 px-3 py-1.5 text-[12px] font-semibold text-white">
                     ৳{studio.hourlyRate.toLocaleString("en-BD")}
                     <span className="font-normal text-gray-300">/hr</span>
+                  </div>
+
+                  <div className="absolute bottom-4 right-4 flex items-center gap-1.5 rounded-lg bg-gray-950/80 px-3 py-1.5 text-[12px] font-semibold text-white">
+                    <Star size={16} className="fill-amber-400 text-amber-400 " />
+                    {studio.rating ?? "New"}
+                    {studio.reviewCount ? ` (${studio.reviewCount})` : ""}
                   </div>
                 </div>
 
@@ -140,13 +147,8 @@ export default function FeaturedStudios() {
                       Up to {studio.maxCapacity} guests
                     </div>
 
-                    <div className="flex items-center gap-1.5 text-sm font-semibold text-gray-700 dark:text-gray-200">
-                      <Star
-                        size={16}
-                        className="fill-amber-400 text-amber-400"
-                      />
-                      {studio.rating ?? "New"}
-                      {studio.reviewCount ? ` (${studio.reviewCount})` : ""}
+                    <div className="flex items-center gap-1.5 text-sm text-gray-700 dark:text-gray-200">
+                      Deposit: ৳{studio.securityDeposit.toLocaleString("en-BD")}
                     </div>
                   </div>
 
