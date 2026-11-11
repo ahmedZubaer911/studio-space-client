@@ -35,7 +35,10 @@ const assurances = [
 
 export default function HostGuarantee() {
   return (
-    <section className="relative overflow-hidden bg-white dark:bg-[#0d0a18] py-20 sm:py-24">
+    <section
+      id="host-gurantee"
+      className="relative overflow-hidden bg-white dark:bg-[#0d0a18] py-20 sm:py-24"
+    >
       {/* Decorative background */}
       <div className="pointer-events-none absolute -left-32 top-10 h-72 w-72 rounded-full bg-violet-200/30 dark:bg-violet-900/20 blur-3xl" />
       <div className="pointer-events-none absolute -right-32 bottom-0 h-72 w-72 rounded-full bg-purple-200/30 dark:bg-violet-900/20 blur-3xl" />
