@@ -56,6 +56,7 @@ export default function StudiosPage() {
   const [categories, setCategories] = useState<string[]>([]);
   const [loadingCategories, setLoadingCategories] = useState(true);
   const [categoryError, setCategoryError] = useState("");
+  const [filterResetKey, setFilterResetKey] = useState(0);
 
   // Debounce search input
   useEffect(() => {
@@ -190,6 +191,7 @@ export default function StudiosPage() {
   const handleClearFilters = () => {
     setFilters(initialFilters);
     setPage(1);
+    setFilterResetKey((prev) => prev + 1);
   };
 
   // Update search
@@ -226,127 +228,122 @@ export default function StudiosPage() {
           </p>
         </div>
 
-        
-{/* Search and Filter Controls */}
-<div className="mb-8 space-y-5">
+        {/* Search and Filter Controls */}
+        <div className="mb-8 space-y-5">
+          {/* Search Bar + Filter Button */}
+          <div className="flex h-12 items-stretch gap-3">
+            <div className="min-w-0 flex-1">
+              <StudioSearch
+                search={search}
+                onSearchChange={handleSearchChange}
+              />
+            </div>
 
-  {/* Search Bar + Filter Button */}
-  <div className="flex h-12 items-stretch gap-3">
-    <div className="min-w-0 flex-1">
-      <StudioSearch
-        search={search}
-        onSearchChange={handleSearchChange}
-      />
-    </div>
+            <button
+              type="button"
+              onClick={() => setFiltersOpen((previous) => !previous)}
+              aria-expanded={filtersOpen}
+              className="inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-5 text-sm font-semibold text-gray-700 shadow-sm transition hover:border-violet-500 hover:text-violet-600 dark:border-gray-700 dark:bg-[#191824] dark:text-gray-200"
+            >
+              <SlidersHorizontal size={18} />
+              Filter
+              <ChevronDown
+                size={16}
+                className={`transition-transform duration-300 ${
+                  filtersOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+          </div>
 
-    <button
-      type="button"
-      onClick={() => setFiltersOpen((previous) => !previous)}
-      aria-expanded={filtersOpen}
-      className="inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-5 text-sm font-semibold text-gray-700 shadow-sm transition hover:border-violet-500 hover:text-violet-600 dark:border-gray-700 dark:bg-[#191824] dark:text-gray-200"
-    >
-      <SlidersHorizontal size={18} />
-      Filter
-      <ChevronDown
-        size={16}
-        className={`transition-transform duration-300 ${
-          filtersOpen ? "rotate-180" : ""
-        }`}
-      />
-    </button>
-  </div>
+          {/* Category Navigation */}
+          {!filtersOpen ? (
+            <div className="flex min-w-0 items-center gap-3">
+              <span className="shrink-0 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Category:
+              </span>
 
-  {/* Category Navigation */}
-  {!filtersOpen ? (
-    <div className="flex min-w-0 items-center gap-3">
-
-      <span className="shrink-0 text-sm font-semibold text-gray-700 dark:text-gray-300">
-        Category:
-      </span>
-
-      {/* All - Always Visible */}
-      <button
-        type="button"
-        onClick={() => handleFilterChange({ category: "" })}
-        className={`shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold transition ${
-          !filters.category
-            ? "bg-violet-600 text-white shadow-sm"
-            : "bg-white text-gray-600 hover:bg-violet-50 hover:text-violet-600 dark:bg-[#191824] dark:text-gray-300"
-        }`}
-      >
-        All
-      </button>
-
-      {/* Scrollable Categories */}
-      <div className="min-w-0 flex-1 overflow-x-auto scrollbar-hide">
-        <div className="flex w-max items-center gap-2">
-
-          {categories
-            .filter(
-              (category) =>
-                category.trim() !== "" &&
-                category.toLowerCase() !== "others"
-            )
-            .map((category) => (
+              {/* All - Always Visible */}
               <button
-                key={category}
                 type="button"
-                onClick={() => handleFilterChange({ category })}
-                className={`shrink-0 whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-semibold transition ${
-                  filters.category === category
+                onClick={() => handleFilterChange({ category: "" })}
+                className={`shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold transition ${
+                  !filters.category
                     ? "bg-violet-600 text-white shadow-sm"
                     : "bg-white text-gray-600 hover:bg-violet-50 hover:text-violet-600 dark:bg-[#191824] dark:text-gray-300"
                 }`}
               >
-                {category}
+                All
               </button>
-            ))}
 
-          {/* Others */}
-          <button
-            type="button"
-            onClick={() => handleFilterChange({ category: "others" })}
-            className={`shrink-0 whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-semibold transition ${
-              filters.category === "others"
-                ? "bg-violet-600 text-white shadow-sm"
-                : "bg-white text-gray-600 hover:bg-violet-50 hover:text-violet-600 dark:bg-[#191824] dark:text-gray-300"
-            }`}
-          >
-            Others
-          </button>
+              {/* Scrollable Categories */}
+              <div className="min-w-0 flex-1 overflow-x-auto scrollbar-hide">
+                <div className="flex w-max items-center gap-2">
+                  {categories
+                    .filter(
+                      (category) =>
+                        category.trim() !== "" &&
+                        category.toLowerCase() !== "others",
+                    )
+                    .map((category) => (
+                      <button
+                        key={category}
+                        type="button"
+                        onClick={() => handleFilterChange({ category })}
+                        className={`shrink-0 whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-semibold transition ${
+                          filters.category === category
+                            ? "bg-violet-600 text-white shadow-sm"
+                            : "bg-white text-gray-600 hover:bg-violet-50 hover:text-violet-600 dark:bg-[#191824] dark:text-gray-300"
+                        }`}
+                      >
+                        {category}
+                      </button>
+                    ))}
 
+                  {/* Others */}
+                  <button
+                    type="button"
+                    onClick={() => handleFilterChange({ category: "others" })}
+                    className={`shrink-0 whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-semibold transition ${
+                      filters.category === "others"
+                        ? "bg-violet-600 text-white shadow-sm"
+                        : "bg-white text-gray-600 hover:bg-violet-50 hover:text-violet-600 dark:bg-[#191824] dark:text-gray-300"
+                    }`}
+                  >
+                    Others
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            /* Advanced Filter Form */
+            <div className="animate-in fade-in slide-in-from-top-2 duration-200">
+              <StudioFilters
+                key={filterResetKey}
+                filters={filters}
+                categories={categories}
+                loadingCategories={loadingCategories}
+                categoryError={categoryError}
+                onChange={handleFilterChange}
+                onClear={handleClearFilters}
+              />
+            </div>
+          )}
+
+          {/* Clear Filters */}
+          {(filters.category ||
+            filters.location ||
+            filters.minPrice ||
+            filters.maxPrice) && (
+            <button
+              type="button"
+              onClick={handleClearFilters}
+              className="text-sm font-medium text-violet-600 hover:text-violet-700 dark:text-violet-400"
+            >
+              Clear all filters
+            </button>
+          )}
         </div>
-      </div>
-    </div>
-  ) : (
-    /* Advanced Filter Form */
-    <div className="animate-in fade-in slide-in-from-top-2 duration-200">
-      <StudioFilters
-        filters={filters}
-        categories={categories}
-        loadingCategories={loadingCategories}
-        categoryError={categoryError}
-        onChange={handleFilterChange}
-        onClear={handleClearFilters}
-      />
-    </div>
-  )}
-
-  {/* Clear Filters */}
-  {(filters.category ||
-    filters.location ||
-    filters.minPrice ||
-    filters.maxPrice) && (
-    <button
-      type="button"
-      onClick={handleClearFilters}
-      className="text-sm font-medium text-violet-600 hover:text-violet-700 dark:text-violet-400"
-    >
-      Clear all filters
-    </button>
-  )}
-
-</div>
 
         {/* Results Header */}
         <div className="mb-6 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">

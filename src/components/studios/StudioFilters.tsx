@@ -1,6 +1,7 @@
 "use client";
 
-import { SlidersHorizontal, RotateCcw, MapPin } from "lucide-react";
+import { useState } from "react";
+import { SlidersHorizontal, MapPin } from "lucide-react";
 
 export interface StudioFiltersState {
   category: string;
@@ -26,8 +27,52 @@ export default function StudioFilters({
   loadingCategories,
   categoryError,
   onChange,
-  onClear,
 }: StudioFiltersProps) {
+  const [priceError, setPriceError] = useState("");
+
+  const [priceDraft, setPriceDraft] = useState({
+    minPrice: filters.minPrice,
+    maxPrice: filters.maxPrice,
+  });
+
+  const handlePriceChange = (field: "minPrice" | "maxPrice", value: string) => {
+    setPriceDraft((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+
+    setPriceError("");
+  };
+
+  const handleApplyFilters = () => {
+    const { minPrice, maxPrice } = priceDraft;
+
+    const invalidPrice = [minPrice, maxPrice].some(
+      (value) =>
+        value !== "" &&
+        (!Number.isInteger(Number(value)) ||
+          Number(value) < 0 ||
+          Number(value) > 100000),
+    );
+
+    if (invalidPrice) {
+      setPriceError("Price must be between ৳0 and ৳100,000.");
+      return;
+    }
+
+    if (
+      minPrice !== "" &&
+      maxPrice !== "" &&
+      Number(maxPrice) < Number(minPrice)
+    ) {
+      setPriceError("Maximum price cannot be lower than minimum price.");
+      return;
+    }
+
+    setPriceError("");
+    onChange({ minPrice, maxPrice });
+  };
+
   // Reusable input styling
   const inputStyles =
     "w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-800 outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 dark:border-white/10 dark:bg-[#1c1528] dark:text-white";
@@ -44,14 +89,15 @@ export default function StudioFilters({
           </h2>
         </div>
 
-        <button
-          type="button"
-          onClick={onClear}
-          className="flex items-center gap-1.5 text-sm font-semibold text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400"
-        >
-          <RotateCcw size={15} />
-          Reset
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={handleApplyFilters}
+            className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700"
+          >
+            Apply
+          </button>
+        </div>
       </div>
 
       {/* Filter Fields */}
@@ -126,10 +172,12 @@ export default function StudioFilters({
           <input
             id="min-price"
             type="number"
-            min="0"
+            min={0}
+            max={100000}
+            step={1}
             placeholder="Min price"
-            value={filters.minPrice}
-            onChange={(e) => onChange({ minPrice: e.target.value })}
+            value={priceDraft.minPrice}
+            onChange={(e) => handlePriceChange("minPrice", e.target.value)}
             className={inputStyles}
           />
         </div>
@@ -146,13 +194,18 @@ export default function StudioFilters({
           <input
             id="max-price"
             type="number"
-            min="0"
+            min={0}
+            max={100000}
+            step={1}
             placeholder="Max price"
-            value={filters.maxPrice}
-            onChange={(e) => onChange({ maxPrice: e.target.value })}
+            value={priceDraft.maxPrice}
+            onChange={(e) => handlePriceChange("maxPrice", e.target.value)}
             className={inputStyles}
           />
         </div>
+        {priceError && (
+          <p className="mt-4 text-sm font-medium text-red-500">{priceError}</p>
+        )}
 
         {/* Sorting */}
         <div>

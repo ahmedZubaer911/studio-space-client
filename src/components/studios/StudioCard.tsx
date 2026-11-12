@@ -35,7 +35,7 @@ export default function StudioCard({ studio }: StudioCardProps) {
         />
 
         {/* Category */}
-        <span className="absolute left-4 top-4 rounded-full bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 shadow-sm dark:bg-blue-500/20 dark:text-blue-300">
+        <span className="absolute left-4 top-4 rounded-full bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 shadow-sm dark:bg-white dark:text-blue-800 dark:font-normal dark:opacity-80">
           {studio.category}
         </span>
 
